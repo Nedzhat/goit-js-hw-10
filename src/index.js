@@ -12,7 +12,8 @@ const countryInfoRef = document.querySelector('.country-info');
 inputRef.addEventListener('input', debounce(findCountry, DEBOUNCE_DELAY));
 
 function findCountry(e) {
-  let dataCountry = e.target.value;
+  const dataCountryFull = e.target.value;
+  const dataCountry = dataCountryFull.trim();
   if (dataCountry) {
     fetchCountries(dataCountry)
       .then(country => {
@@ -20,12 +21,10 @@ function findCountry(e) {
           Notify.info(
             'Too many matches found. Please enter a more specific name.'
           );
-          console.log(country);
+          clearMarkupCountry();
         } else if (country.length >= 2 && country.length <= 10) {
-          console.log('Тут от 2 до 10');
           createMarkupSomeCountry(country);
         } else if (country.length < 2) {
-          console.log('Я один');
           createMarkupOneCountry(country);
         }
       })
